@@ -1,0 +1,27 @@
+{{- $sourceUrl := .Destination -}}
+{{- $image := partial "helper/image" (dict "Resources" .Page.Resources "Image" $sourceUrl) -}}
+{{- if .IsBlock -}}
+	{{- $alt := .PlainText | safeHTML -}}
+	{{- $Permalink := $image.Permalink -}}
+	{{- $Width := $image.Width -}}
+	{{- $Height := $image.Height -}}
+	<figure>
+		<a href="{{ $Permalink }}"
+			data-pswp-width="{{ $Width }}"
+			data-pswp-height="{{ $Height }}"
+			class="image-link"
+			target="_blank"
+		>
+			{{ partial "helper/image/lazy" (dict
+				"Image" $image
+				"Alt"	$alt
+				"Widths" .Page.Site.Params.Page.Image.Widths
+			)}}
+		</a>
+		{{ with $alt }}
+		<figcaption>{{ . | $.Page.RenderString }}</figcaption>
+		{{ end }}
+	</figure>
+{{- else -}}
+	<img src="{{ $image.Permalink }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}"{{ end }} />
+{{- end -}}

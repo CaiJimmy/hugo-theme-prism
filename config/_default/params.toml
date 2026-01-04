@@ -1,0 +1,14 @@
+Logo = ""
+
+[Default]
+Hero = {Blurry = true, Vibrant = false}
+TOC = true
+
+[Page]
+Image = {Widths = [400, 800, 1600, 2000]}
+HeaderTaxonomy = "categories"
+FooterTaxonomy = "tags"
+
+[DateFormat]
+Published = ":date_medium"
+LastUpdated = ":date_full"

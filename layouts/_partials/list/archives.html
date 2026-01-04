@@ -1,0 +1,25 @@
+{{/*
+    Params:
+        Pages: Pages to render
+        StickyDate: Have sticky date or not
+
+    Filter pages manually because Hugo does not exclude those pages from taxonomy page
+    See https://discourse.gohugo.io/t/dont-show-a-post-in-the-posts-tab/34918/9
+*/}}
+{{ $pages := where .Pages ".Params._build.list" "!=" "never" }}
+<div class="archives">
+    {{ range $pages.GroupByDate "2006" }}
+        {{ $id := printf "year-%s" (anchorize .Key) }}
+        <section class="article-list-group archives-group {{ if $.StickyDate }}sticky-date{{ end }}" id="{{ $id }}">
+            <h2 class="article-list-group-title archives-date"><a href="{{ $.RelPermalink }}#{{ $id }}">{{ .Key }}</a></h2>
+            <div class="article-list article-grid">
+                {{ range .Pages }}
+                    {{ partial "list/compact" (dict 
+                        "Context" . 
+                        "dateFormat" ":date_short"
+                    ) }}
+                {{ end }}
+            </div>
+        </section>
+    {{ end }}
+</div>

@@ -1,0 +1,17 @@
+{{ with .OutputFormats.Get "json" -}}
+<div id="list-search" data-json="{{ .RelPermalink }}">
+    <input placeholder="{{ i18n "search.placeholder" }}">
+    <p></p>
+</div>
+
+{{- $opts := dict "minify" hugo.IsProduction "format" "esm" -}}
+{{- $searchScript := resources.Get "ts/search.ts" | js.Build $opts -}}
+
+<script type="module">
+    import Search from '{{ $searchScript.RelPermalink }}';
+    Search({
+        no_result: "{{ i18n "search.no_result" }}",
+        num_result: "{{ i18n "search.num_result" }}"
+    });
+</script>
+{{- end }}

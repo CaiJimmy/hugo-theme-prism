@@ -1,0 +1,9 @@
+{{- $image := partial "helper/image" (dict "Resources" .Page.Resources "Image" .Destination) -}}
+{{- $Permalink := $image.Permalink -}}
+<figure>
+    <img src="{{ $Permalink }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}"{{ end }} />
+    {{- $alt := .PlainText | safeHTML -}}
+    {{- with $alt -}}
+        <figcaption>{{ . | markdownify }}</figcaption>
+    {{- end -}}   
+</figure>

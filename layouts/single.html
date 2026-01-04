@@ -1,0 +1,51 @@
+{{ define "global" }}
+    {{ $CSSModules := slice "page" }}
+
+    {{ if len (.Site.RegularPages.Related .) }}
+        {{ $CSSModules = $CSSModules | append "list" }}
+    {{ end }}
+
+    {{ .Scratch.Set "CSSModules" $CSSModules }}
+
+    {{ $image := partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image) }}
+    {{ .Scratch.Set "image" $image }}
+    {{ .Scratch.Set "hasBlurryHero" (and $image (default .Site.Params.Default.Hero.Blurry .Params.Hero.Blurry)) }}
+{{ end }}
+
+{{ define "main" }}
+{{ $SmallTitle := slice }}
+
+{{ if and .Section (not (in .Site.Params.mainSections .Section)) }}
+    {{/* Not main section, add link to it */}}
+    {{ $SmallTitle = $SmallTitle | append (i18n "published_on" (printf `<a href="%s" class="link">%s</a>` .CurrentSection.RelPermalink .CurrentSection.Title)) }}
+{{ end }}
+
+{{ if not .Date.IsZero }}
+    {{ $SmallTitle = $SmallTitle | append (.Date | time.Format .Site.Params.DateFormat.Published) }}
+{{ end }}
+
+{{ range .GetTerms .Site.Params.Page.HeaderTaxonomy }}
+    {{ $SmallTitle = $SmallTitle | append (printf `<a href="%s">%s</a>` .RelPermalink .Title) }}
+{{ end }}
+
+{{ $SmallTitle = delimit $SmallTitle " / " }}
+
+{{ $image := "" }}
+
+{{ if .Params.Image }}
+    {{ $image = partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image) }}
+{{ end }}
+
+{{ partial "common/hero" 
+    (dict "Context" . 
+            "Image" $image 
+            "Title" .Title 
+            "Description" .Params.Description
+            "SmallTitle" $SmallTitle
+            "ShowImage" true
+            "ImageAlt" (i18n "featured_image_of" .Title)
+            "ImageWidths" .Site.Params.Page.Image.Widths
+    )
+}}
+{{ partial "page/main" . }}
+{{ end }}

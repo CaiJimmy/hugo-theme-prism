@@ -1,0 +1,14 @@
+{{- $title := .Title -}}
+{{- $siteTitle := .Site.Title -}}
+
+{{- if .IsHome -}}
+    {{ $title = default $siteTitle $title }}
+{{- else if eq .Kind "term" -}}
+    <!-- {TAXONOMY_TYPE}: {TAXONOMY_TERM} -->
+    {{ $title = slice (title .Data.Singular) ": " $title }}
+
+    {{ $title = $title | append " - " $siteTitle }}
+    {{ $title = delimit $title "" }}
+{{- end -}}
+
+{{ return $title }}

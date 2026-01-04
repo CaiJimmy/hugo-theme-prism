@@ -1,0 +1,24 @@
+/// Params:
+///     - Image: An image object, from `helper/image` should be passed
+///     - Width: Desired width
+///     - Height: Desired height
+/// Returns:
+///     Another image object
+
+/// If it's not a local image, do nothing
+{{ $result := .Image }}
+
+{{ if .Image.Local }}
+    {{ $resized := .Image.Resource.Fill (printf "%vx%v" .Width .Height) }}
+    {{ $result = dict 
+        "Local" true
+        "Resource" $resized
+        "Permalink" $resized.RelPermalink
+        "Width" .Width
+        "Height" .Height
+    }}
+{{ else }}
+    {{ printf "A no local image has been passed to helper/image/fill: %s" .Image.Permalink }}
+{{ end }}
+
+{{ return $result }}

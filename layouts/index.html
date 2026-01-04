@@ -1,0 +1,100 @@
+{{ define "global" }}
+    {{ .Scratch.Set "CSSModules" (slice "list" "page") }}
+    {{ .Scratch.Set "CSSModulesCritical" (slice) }}
+
+    {{ $image := "" }}
+    {{ $mainPages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+    {{ $pages := first 5 $mainPages }}
+
+    {{ if and (len $pages) (.Params.FeatureFirstArticle) }}
+        {{ with index $pages 0 }}
+            {{ $image = partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image) }}
+        {{ end }}
+    {{ else }}
+        {{ $image = partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image) }}
+    {{ end }}
+
+    {{ .Scratch.Set "hasBlurryHero" (and $image (default .Site.Params.Default.Hero.Blurry .Params.Hero.Blurry)) }}
+    {{ .Scratch.Set "image" $image }}
+{{ end }}
+
+{{ define "main" }}
+
+{{ $mainPages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}
+{{ $pages := first 5 $mainPages }}
+
+{{ $ShowImage := false }}
+{{ with ($.Scratch.Get "image") }}{{ $ShowImage = true }}{{ end }}
+
+{{ $heroParams := (dict 
+    "Context" .
+    "Image" ($.Scratch.Get "image")
+    "Title" (default .Site.Title .Title)
+    "Description" (default .Site.Params.Description .Params.Description)
+    "ShowImage" $ShowImage
+    "ImageWidths" $.Site.Params.Page.Image.Widths
+) }}
+
+{{ $SinglePage := .Params.SinglePage }}
+{{ $FeatureFirstArticle := and (and (len $pages) (.Params.FeatureFirstArticle)) (not $SinglePage) }}
+{{ if $FeatureFirstArticle }}
+    {{- $latest := index $pages 0 -}}
+    {{ $heroParams = merge $heroParams (dict 
+        "SmallTitle" "Latest Post"
+        "Title" (printf `<a href="%s" class="link">%s</a>` $latest.RelPermalink $latest.Title)
+        "Description" $latest.Params.Description
+    ) }}
+{{ end }}
+
+{{ partial "common/hero" $heroParams }}
+
+{{ if $SinglePage }}
+    {{ partial "page/main" . }}
+{{ else }}
+    {{ if $FeatureFirstArticle }}
+        {{- $latest := index $pages 0 -}}
+        {{- with $latest -}}
+        <article class="article default" style="margin-bottom: 40px;">
+            {{ if .Truncated }}
+            <div class="container flex flex-col default-gap">
+                <div class="summary article-content">
+                    {{ .Summary }}
+                </div>
+                <a href="{{ .RelPermalink }}" class="continue-reading link">
+                    {{ T "continue_reading" }}
+                </a>
+            </div>
+            {{ end }}
+        </article>
+        {{ end }}
+    {{ end }}
+
+    <div class="container flex flex-col default-gap">
+        {{ if and (not $FeatureFirstArticle) (len $pages) }}
+            <section class="article-list">
+                {{ partial "list/default" (index $pages 0) }}
+            </section>
+        {{ end }}
+
+        {{ if gt (len $pages) 1 }}
+        <section class="article-list">
+            <hr class="section-separator" />
+            <div class="article-grid two-column">
+                {{ range $index, $val := (after 1 $pages) }}
+                    {{ partial "list/compact" (dict "Context" $val) }}
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        {{ if gt (len $mainPages) 5 }}
+            {{- $query := first 1 (where .Site.Pages "Layout" "==" "archives") -}}
+            {{ if $query }}
+                <a href="{{ (index $query 0).RelPermalink }}" class="more-article-button">
+                    {{ T "more_posts" }}
+                </a> 
+            {{ end }}
+        {{ end }}
+    </div>
+{{ end }}
+{{ end }}

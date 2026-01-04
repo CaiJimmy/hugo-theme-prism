@@ -1,0 +1,5 @@
+/// Param: Image object
+/// Returns: vibrant color in HEX
+
+{{ $colors := .Resource.Colors }}
+{{ return (index $colors 0) }}

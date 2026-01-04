@@ -1,0 +1,8 @@
+{{- $result := slice -}}
+
+{{- range (where . ".Params._build.list" "!=" "never") -}}
+    {{- $data := dict "id" .File.UniqueID "title" .Title "content" (.Plain) -}}
+    {{- $result = $result | append $data -}}
+{{- end -}}
+
+{{ jsonify $result }}

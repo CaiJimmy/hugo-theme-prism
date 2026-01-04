@@ -1,0 +1,70 @@
+@use "../breakpoints.scss" as *;
+
+:root {
+    --menu-background: var(--body-background);
+    --menu-color: #333;
+    --menu-border-radius: 8px;
+    --menu-hover-background: rgb(0 0 0 / 10%);
+
+    @media (prefers-color-scheme: dark) {
+        --menu-hover-background: rgb(255 255 255 / 10%);
+    }
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    gap: 10px;
+
+    a {
+        height: var(--navbar-menu-height);
+        font-size: 16px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+
+        color: var(--navbar-color);
+        border-radius: 4px;
+        transition: all 0.5s ease;
+
+        &:hover,
+        &.current {
+            background-color: var(--menu-hover-background);
+        }
+
+        &.with-text {
+            padding: 10px;
+
+            @include respond(md) {
+                padding: 10px 20px;
+            }
+        }
+
+        &.icon-only {
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--navbar-color);
+        stroke-width: 1.33;
+    }
+}
+
+.navbar-menu {
+    flex-wrap: wrap;
+    display: none;
+    margin: 0;
+    display: flex;
+
+    li {
+        font-size: 16px;
+
+        @include respond(md) {
+            font-size: 18px;
+        }
+    }
+}

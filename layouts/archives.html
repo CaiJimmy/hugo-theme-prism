@@ -1,0 +1,21 @@
+{{ define "global" }}
+{{ .Scratch.Set "CSSModules" (slice "archives" "list" "search")}}
+{{ .Scratch.Set "wide" true }}
+{{ end }}
+
+{{ define "body-class" }}
+    archives-page
+{{ end }}
+
+{{ define "main" }}
+{{ partial "common/hero" (dict "Context" . "Image" .Params.Image "Title" .Title "Description" .Params.Description) }}
+<div class="container main-container wide">
+    {{ partial "list/search" . }}
+    <div id="archive-list">
+        {{ partial "list/archives" (dict 
+            "TwoCol" false
+            "Pages" (where .Site.RegularPages "Type" "in" .Site.Params.mainSections)
+        ) }}
+    </div>
+</div>
+{{ end }}

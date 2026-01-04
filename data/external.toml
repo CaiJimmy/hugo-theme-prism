@@ -1,0 +1,7 @@
+[PhotoSwipe]
+Style = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css"
+Core = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js"
+Lightbox = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js"
+
+[InterFont]
+Style = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap"

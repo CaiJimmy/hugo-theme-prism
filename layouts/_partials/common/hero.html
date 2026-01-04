@@ -1,0 +1,66 @@
+{{/*
+    Parameters:
+        SmallTitle: string
+        Image: Image object
+        Title
+        Description
+        ImageWidths: array of ints
+
+        ShowImage: bool
+*/}}
+
+{{ $blurry := false }}
+{{ $vibrant := false }}
+
+{{ if and .Image }}
+    {{ $blurry = default .Context.Site.Params.Default.Hero.Blurry .Context.Params.Hero.Blurry }}
+    {{ $vibrant = default .Context.Site.Params.Default.Hero.Vibrant .Context.Params.Hero.Vibrant }}
+{{ end }}
+
+<div class="hero {{ if $blurry }}blurry{{ end }} {{ if .Image }}with-cover{{ end }}">
+    {{ if .Image }}
+        {{ if .ShowImage }}
+            <div class="hero-cover">
+                {{ partial "helper/image/lazy" (dict
+                    "Image" .Image
+                    "Alt" (default .ImageAlt (printf "Cover image of %s" .Title))
+                    "Widths" .ImageWidths
+                )}}
+            </div>
+            {{ if $blurry }}
+                <div class="filter"></div>
+            {{ end }}
+        {{ end }}
+        
+        {{ $resized := partial "helper/image/resize" (dict 
+            "Image" .Image
+            "Width" 50
+        ) }}
+        {{ $backgroundURL := $resized.Permalink }}
+        {{ if $resized.Local }}
+            {{ $backgroundURL = printf "data:image/png;base64, %s" ($resized.Resource.Content | base64Encode) }}
+        {{ end }}
+
+        <style>
+            .hero {
+                --hero-cover-background: url("{{ $backgroundURL | safeURL }}");
+            }
+        </style>
+    {{ end }}
+    <div class="hero-body container {{ if .Context.Scratch.Get `wide` }}wide{{ end }} {{ if and .ShowImage .Image }}show-cover{{ end }}">
+        {{ with .SmallTitle }}
+        <span>{{ . | safeHTML }}</span>
+        {{ end }}
+
+        {{ with .Title }}
+        <h1 {{ if lt (partial "helper/count-char" .) 8 }}class="big" {{ end }}>
+            {{ . | safeHTML }}
+        </h1>
+        {{ end }}
+        {{ with .Description }}
+            <h2 {{ if lt (partial "helper/count-char" .) 20 }}class="big" {{ end }}>
+                {{ . }}
+            </h2>
+        {{ end }}
+    </div>
+</div>

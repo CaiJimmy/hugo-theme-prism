@@ -1,0 +1,25 @@
+.site-footer {
+    font-size: 14px;
+    margin-top: 40px;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 40px;
+        padding-bottom: 80px;
+    }
+
+    .copyright,
+    .copyright a {
+        font-weight: bold;
+        color: var(--text-color-secondary);
+
+    }
+
+    .built-with,
+    .built-with a {
+        font-size: 12px;
+        color: var(--text-color-secondary);
+    }
+}

@@ -1,0 +1,1 @@
+{{- partial "list/search.json" (where .Site.RegularPages "Type" "in" .Site.Params.mainSections) -}}

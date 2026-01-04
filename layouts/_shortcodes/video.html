@@ -1,0 +1,10 @@
+{{- $src := .Get 0 -}}
+{{- $videoFile := .Page.Resources.Get $src -}}
+
+<video
+    {{ range after 1 $.Params }}
+        {{ . }}
+    {{ end }}
+    >
+    <source src="{{ $videoFile.RelPermalink }}" type="{{ $videoFile.MediaType.Type }}" />
+</video>

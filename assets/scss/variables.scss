@@ -1,0 +1,61 @@
+:root {
+    /// Font family
+    --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Droid Sans", "Helvetica Neue";
+    --code-font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+    --base-font-family: "Inter", var(--sys-font-family), sans-serif;
+
+    /// Color scheme
+    --accent-color: #8ecae6;
+    --accent-color-darker: #219ebc;
+    --accent-color-text: #fff;
+
+    --body-background: #fff;
+    --text-color-main: #000;
+    --text-color-secondary: #585858;
+    --text-color-tertiary: #747474;
+
+    --alt-background: rgb(245, 245, 245);
+    --alt-text-color: var(--text-color-secondary);
+
+    --border-color: #e1e1e1;
+    --border-color-hover: #000;
+    --border-full: 1000000px;
+    --button-border-radius: 4px;
+
+    --link-background-color: 142, 202, 230;
+    --link-background-opacity: 0.7;
+    --link-background-opacity-hover: 0.9;
+
+    --container-width: 750px;
+    --container-wide-width: 900px;
+
+    --scrollbar-track-color: var(--border-color);
+    --scrollbar-thumb-color: #999;
+
+    --logo-hover-color: var(--accent-color-darker);
+
+    --table-border-color: var(--border-color);
+    --tr-even-background-color: var(--alt-background);
+
+    --default-gap: 40px;
+
+    --navbar-color: var(--text-color-main);
+}
+
+/// Dark mode scheme
+:root {
+    @media (prefers-color-scheme: dark) {
+        --body-background: #303030;
+        --text-color-main: rgba(255, 255, 255, 0.9);
+        --text-color-secondary: rgba(255, 255, 255, 0.7);
+        --text-color-tertiary: rgba(255, 255, 255, 0.5);
+
+        --border-color: #666666;
+        --border-color-hover: #9c9c9c;
+
+        --alt-background: #272727;
+
+        --navbar-color: #fff;
+    }
+}

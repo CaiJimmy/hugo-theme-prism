@@ -1,0 +1,26 @@
+{{ define "global" }}
+    {{ .Scratch.Set "CSSModules" (slice "list" "archives")}}
+{{ end }}
+
+{{ define "main" }}
+{{ partial "common/hero" (dict "Context" . "Image" .Params.image "Title" .Title "Description" .Params.Description) }}
+{{ $grow := false }}
+<div class="container">
+    <section class="archives-tags">
+        <div class="archives-tags-list">
+            {{ $tags := .Pages }}
+            {{ range $tags }}
+                <a 
+                    href="{{ .Permalink }}"
+                    class="
+                        {{ if $grow }}grow{{ end }}
+                    "
+                >
+                    <span>{{ .Title }}</span>
+                    <span class="count">{{ len .Pages }}</span>
+                </a>
+            {{ end }}
+        </div>
+    </section>
+</div>
+{{ end }}

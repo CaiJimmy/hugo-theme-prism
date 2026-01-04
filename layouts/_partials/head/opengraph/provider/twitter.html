@@ -1,0 +1,21 @@
+{{- with .Site.Params.opengraph.twitter.site -}}
+    <meta name="twitter:site" content="@{{ . }}">
+    <meta name="twitter:creator" content="@{{ . }}">
+{{- end -}}
+
+{{- $title := partial "data/title" . -}}
+{{- $description := partial "data/description" . -}}
+
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+
+{{ $cover := partial "helper/cover-image" . }}
+{{ if $cover.Exists }}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='{{ absURL $cover.Permalink }}' />
+{{ else if .Site.Params.Logo }}
+    {{- $logo := partial "helper/image" (dict "Resources" resources "Image" .Site.Params.Logo) -}}
+    {{ $Permalink := $logo.Permalink }}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="{{ $Permalink }}" />
+{{- end -}}

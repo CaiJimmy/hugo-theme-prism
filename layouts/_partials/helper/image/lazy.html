@@ -1,0 +1,75 @@
+{{/*
+    Params to be passed:
+        Image: Original image object (must be local)
+        ThumbnailSize: default 50
+        Transform: string
+        TransformParams: dict
+        Alt
+        Widths: Array of widths to generate srcset
+*/}}
+
+{{- $Permalink := .Image.Permalink -}}
+
+{{ if not .Image.Local }}
+<div class="lazyload-wrapper">
+    <img src="{{ $Permalink }}"
+        {{ if .Image.Width }}
+            width="{{ .Image.Width }}"
+            height="{{ .Image.Height }}"
+        {{ end }}
+        {{ with .Alt }}alt="{{ . }}"{{ end }}
+        loading="lazy"
+    />
+</div>
+{{ else }}
+{{- $Transformed := .Image -}}
+
+{{- with .Transform -}}
+    {{- $Transformed = partial (printf "helper/image/%s" .) $.TransformParams -}}
+    {{- $Permalink = $Transformed.Permalink -}}
+{{- end -}}
+
+{{- $srcset := slice -}}
+{{- if and .Widths $Transformed.Width -}}
+    {{- range .Widths -}}
+        {{- $diff := sub $Transformed.Width . -}}
+        {{- if le $diff 200 -}}{{ continue }}{{- end -}}
+        {{- $resized := partial "helper/image/resize" (dict 
+            "Image" $Transformed
+            "Width" .
+        ) -}}
+        {{- $resizedPermalink := $resized.Permalink -}}
+        {{- $srcset = $srcset | append (printf "%s %vw" $resizedPermalink .) -}}
+    {{- end -}}
+    {{- $srcset = $srcset | append (printf "%s %vw" $Permalink $Transformed.Width) -}}
+{{- end -}}
+
+{{- $resized := partial "helper/image/resize" (dict 
+    "Image" $Transformed
+    "Width" (default 50 .ThumbnailSize)
+) }}
+
+<div class="lazyload-wrapper no-js">
+    <img src="data:image/png;base64, {{ $resized.Resource.Content | base64Encode }}" 
+        class="lazyload"
+        {{ if $Transformed.Width }}
+            width="{{ $Transformed.Width }}"
+            height="{{ $Transformed.Height }}"
+        {{ end }}
+        data-src="{{ $Permalink }}"
+        {{ with $srcset }}data-srcset="{{ delimit . `,` }}"{{ end }}
+        {{ with .Alt }}alt="{{ . }}"{{ end }}
+        style="display: none;"
+        onload="this.removeAttribute('onload');this.classList.remove('no-js');this.parentNode.classList.remove('no-js');this.removeAttribute('style')"
+    />
+    <noscript>
+        <img src="{{ $Permalink }}"
+            {{ if $Transformed.Width }}
+                width="{{ $Transformed.Width }}"
+                height="{{ $Transformed.Height }}"
+            {{ end }}
+            {{ with .Alt }}alt="{{ . }}"{{ end }}
+        />
+    </noscript>
+</div>
+{{ end }}

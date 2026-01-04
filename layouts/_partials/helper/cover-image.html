@@ -1,0 +1,15 @@
+/// Return:
+///    Exists: boolean
+///    ...(helper/image)
+
+{{ $result := dict 
+    "Exists" false
+}}
+
+{{ with .Params.image }}
+    {{ $result = merge $result (dict "Exists" true) }}
+    {{ $image := partial "helper/image" (dict "Resources" $.Resources "Image" . ) }}
+    {{ $result = merge $result $image }}
+{{ end }}
+
+{{ return $result }}

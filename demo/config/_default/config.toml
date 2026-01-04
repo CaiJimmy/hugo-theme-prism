@@ -1,0 +1,38 @@
+baseurl = "https://prism.cai.im"
+theme = "hugo-theme-prism"
+title = "Hugo Theme Prism"
+copyright = "CC BY-NC-SA 4.0"
+
+[build]
+noJSConfigInAssets = false
+
+[author]
+name = "Jimmy Cai"
+email = "jimmy@cai.im"
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+
+[languages]
+[languages.zh]
+contentDir = "content"
+languageName = "简体中文"
+weight = 1
+hasCJKLanguage = true
+title = "Hugo 主题 Prism"
+[languages.zh.params]
+description = "极简于形，斑斓于心"
+
+[languages.en]
+contentDir = "content/en"
+languageName = "English"
+weight = 2
+[languages.en.params]
+description = "Minimal in form, vibrant in heart"
+
+[outputs]
+_merge = "deep"
+
+[markup]
+_merge = 'deep'

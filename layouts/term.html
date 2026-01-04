@@ -1,0 +1,26 @@
+{{ define "global" }}
+    {{ .Scratch.Set "CSSModules" (slice "archives" "list" "search")}}
+{{ end }}
+
+{{ define "body-class" }}
+archives-page
+{{ end }}
+
+{{ define "main" }}
+{{ $taxonomy := .Parent }}
+{{ $SmallTitle := printf `<a href="%s">%s</a>` $taxonomy.Permalink $taxonomy.Title }}
+{{ $Title := .Title }}
+
+{{ partial "common/hero" (dict "Context" . "Image" .Params.image "Title" .Title "Description" .Params.Description
+"SmallTitle" $SmallTitle) }}
+
+<div class="container main-container">
+    {{ partial "list/search" . }}
+    <div id="archive-list">
+        {{ partial "list/archives" (dict
+            "Context" . 
+            "Pages" .Pages
+        )}}
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,28 @@
+<div class="flex flex-col default-gap">
+    <article class="container main-article">
+        <section class="article-content">
+            {{- $hasTOC := ge (len .TableOfContents) 100 -}}
+            {{ if and $hasTOC (default .Site.Params.Default.TOC .Params.TOC) }}
+            <div class="table-of-contents collapsed">
+                <div class="toc-header">
+                    <h2>{{ i18n "table_of_contents" }}</h2>
+                </div>
+                <div class="toc-content">
+                    {{ .TableOfContents }}
+                </div>
+            </div>
+            {{ end }}
+
+            {{ .Content }}
+        </section>
+
+        {{ partial "page/footer" . }}
+    </article>
+
+    {{ partial "page/related" . }}
+
+    {{ if not (eq .Params.comments false) }}
+        {{ partial "page/comments" . }}
+    {{ end }}
+</div>
+{{ partial "page/photoswipe" . }}

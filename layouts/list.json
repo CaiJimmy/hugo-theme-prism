@@ -1,0 +1,1 @@
+{{- partial "list/search.json" .Pages -}}

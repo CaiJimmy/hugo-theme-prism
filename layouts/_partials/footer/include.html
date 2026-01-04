@@ -1,0 +1,22 @@
+{{- $ThemeVersion := "1.0.0" -}}
+<footer class="site-footer">
+    <div class="container {{ if .Scratch.Get "wide" }}wide{{ end }}">
+        <section class="copyright">
+            &copy;
+            {{ if and (.Site.Params.footer.since) (ne .Site.Params.footer.since (int (now.Format "2006"))) }}
+            {{ .Site.Params.footer.since }} -
+            {{ end }}
+            {{ now.Format "2006" }} /
+            <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+        </section>
+        <section class="built-with">
+            {{- $Generator := `<a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a>` -}}
+            {{- $Theme := printf `<b><a href="https://github.com/CaiJimmy/hugo-theme-prism" target="_blank"
+                    rel="noopener" data-version="%s" class="link">Prism</a></b>` $ThemeVersion -}}
+            {{- $DesignedBy := `<a href="https://cai.im" target="_blank" rel="noopener">Jimmy</a>` -}}
+            {{ T "footer.built_with" (dict "Generator" $Generator) | safeHTML }} / {{ T "footer.designed_by" (dict
+            "Theme" $Theme "DesignedBy" $DesignedBy) | safeHTML }}
+        </section>
+    </div>
+</footer>
+{{ partial "footer/custom" . }}

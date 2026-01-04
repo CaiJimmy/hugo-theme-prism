@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{{- block `global` . -}}{{- end -}}
+<html lang="{{ .Site.LanguageCode }}">
+    {{ partial "head/include" . }}
+    <body class="{{ block `body-class` . }}{{ end }}">
+        <div style="background-color: var(--body-background)">
+            {{- partial "common/navbar" . -}}
+            {{- block "main" . }}{{- end }}
+            {{- partial "footer/include" . -}}
+        </div>
+    </body>
+</html>

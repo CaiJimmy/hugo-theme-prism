@@ -1,0 +1,48 @@
+@use "scrim.scss" as *;
+@use "hugo:vars" as v;
+@use "sass:string";
+@use "sass:color";
+
+$color: v.$color;
+$red: color.channel($color, "red", $space: rgb);
+$green: color.channel($color, "green", $space: rgb);
+$blue: color.channel($color, "blue", $space: rgb);
+$hue: color.channel($color, "hue", $space: hsl);
+$saturation: color.channel($color, "saturation", $space: hsl);
+$lightness: color.channel($color, "lightness", $space: hsl);
+
+/// Depending on the lightness of the color, we'll use a dark or light text color.
+$main-text-color: if(sass($lightness > 60%): #000; else: #fff);
+
+@media (prefers-color-scheme: light) {
+    .hero.blurry .filter:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        @include scrimGradient($color, "to bottom");
+    }
+
+    .blurry-hero {
+        --navbar-color: #{$main-text-color} !important;
+    }
+}
+
+:root {
+    --link-background-color: #{$red},
+    #{$green},
+    #{$blue};
+    --scrollbar-thumb-color: #{$color};
+
+    --accent-color: #{$main-text-color} !important;
+}
+
+@if v.$blurry {
+    body {
+        /// Safari 26 now ignores theme-color meta tag
+        background: $color;
+    }
+}

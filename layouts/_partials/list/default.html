@@ -1,0 +1,36 @@
+<article class="article default">
+    <header>
+        <div class="meta">
+            <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date | time.Format .Site.Params.DateFormat.Published }}</time>
+        </div>
+        <h1 class="title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h1>
+        {{ with .Params.description }}
+        <h2 class="description">{{ . }}</h2>
+        {{ end }}
+    </header>
+
+    {{ $cover := partial "helper/cover-image" . }}
+    {{ if $cover.Exists }}
+        <div class="image">
+            {{ partial "helper/image/lazy" (dict
+                "Image" $cover
+                "Alt" (printf "Cover image of article %s" .Title)
+                "Transform" "fill"
+                "TransformParams" (dict 
+                    "Image" $cover
+                    "Width" 950
+                    "Height" 350
+                )
+            )}}
+        </div>
+    {{ end }}
+
+    {{ if .Truncated }}
+    <div class="summary article-content">
+        {{ .Summary }}
+    </div>
+    <a href="{{ .RelPermalink }}" class="continue-reading link">
+        {{ T "continue_reading" }}
+    </a>
+    {{ end }}
+</article>

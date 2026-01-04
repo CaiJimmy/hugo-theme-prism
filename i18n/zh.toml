@@ -1,0 +1,22 @@
+published_on = "发布于{{ . }}"
+last_updated_on = "最后更新于{{ . }}"
+table_of_contents = "目录"
+featured_image_of = "{{ . }} 的特色图片"
+
+continue_reading = "继续阅读"
+more_posts = "更多..."
+
+section = "专栏"
+
+[search]
+placeholder = "搜索..."
+no_result = "没有找到关于 \"{keyword}\" 的结果"
+num_result = "找到 {count} 个关于 \"{keyword}\" 的结果"
+
+[404]
+title = "404 未找到"
+does_not_exist = "该页面不存在。"
+
+[footer]
+built_with = "使用 {{ .Generator }} 构建"
+designed_by = "主题 {{ .Theme }} 由 {{ .DesignedBy }} 设计"

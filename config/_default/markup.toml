@@ -1,0 +1,10 @@
+goldmark.parser.wrapStandAloneImageWithinParagraph = false
+goldmark.parser.attribute.block = true
+
+[tableOfContents]
+endLevel = 4
+ordered = true
+startLevel = 2
+
+[highlight]
+noClasses = false

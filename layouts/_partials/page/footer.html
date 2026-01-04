@@ -1,0 +1,28 @@
+<footer class="article-footer">
+    {{ if index .Params .Site.Params.Page.FooterTaxonomy }}
+    <section class="article-tag">
+        {{ range (.GetTerms .Site.Params.Page.FooterTaxonomy) }}
+            <a href="{{ .RelPermalink }}">
+                {{ .LinkTitle }}
+            </a>
+        {{ end }}
+    </section>
+    {{ end }}
+
+    {{- if and (ne .Params.license false) (.Site.Copyright) -}}
+    <section class="article-copyright">
+        {{ partial "helper/icon" "copyright" }}
+        <span>{{ default .Site.Copyright .Params.license | markdownify }}</span>
+    </section>
+    {{- end -}}
+
+    {{- if ne .Lastmod .Date -}}
+    <section class="article-time">
+        {{ partial "helper/icon" "clock" }}
+        <span class="article-time--modified">
+            {{ $lastUpdate := .Lastmod | time.Format .Site.Params.DateFormat.LastUpdated }}
+            {{ i18n "last_updated_on" $lastUpdate }}
+        </span>
+    </section>
+    {{- end -}}
+</footer>

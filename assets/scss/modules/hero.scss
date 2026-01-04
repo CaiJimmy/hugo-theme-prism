@@ -1,0 +1,174 @@
+@use "breakpoints.scss" as *;
+@use "../helper/scrim.scss" as *;
+
+.hero {
+    font-family: var(--serif-font);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-end;
+
+    &.with-cover {
+        &.blurry {
+            padding-top: var(--navbar-height);
+            height: 500px;
+
+            @include respond(md) {
+                height: max(50vh, 600px);
+            }
+
+            .hero-body {
+                padding-bottom: 100px;
+            }
+        }
+
+        .hero-body {
+            h1,
+            h2,
+            span,
+            a {
+                color: rgba(0, 0, 0, 0.4);
+                @media (prefers-color-scheme: dark) {
+                    color: rgb(200 200 200 / 40%);
+                }
+            }
+        }
+    }
+
+    .hero-cover img {
+        width: 100%;
+        max-height: max(60vh, 600px);
+        object-fit: cover;
+    }
+
+    .hero-body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        padding-bottom: 40px;
+
+        &:not(.show-cover) {
+            padding-top: 100px;
+            padding-bottom: 100px;
+
+            @include respond(md) {
+                padding-top: 150px;
+                padding-bottom: 150px;
+            }
+        }
+
+        &.show-cover {
+            margin-top: 40px;
+        }
+
+        h1,
+        h2,
+        span {
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-size: cover;
+            background-position: center;
+            background-image: var(--hero-cover-background);
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 0;
+            color: var(--text-color-main);
+
+            @include respond(md) {
+                font-size: 64px;
+            }
+
+            &.big {
+                font-size: 48px;
+
+                @include respond(md) {
+                    font-size: 64px;
+                }
+
+                @include respond(lg) {
+                    font-size: 72px;
+                }
+
+                @include respond(xl) {
+                    font-size: 96px;
+                }
+            }
+        }
+
+        h2 {
+            font-weight: normal;
+            color: var(--text-color-secondary);
+            font-size: 24px;
+            margin: 0;
+
+            &.big {
+                @include respond(md) {
+                    font-size: 36px;
+                }
+            }
+        }
+
+        span,
+        span a {
+            font-size: 18px;
+            color: var(--text-color-tertiary);
+        }
+    }
+
+    &.blurry {
+        .hero-cover,
+        .filter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-cover {
+            background-image: var(--hero-cover-background);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            object-fit: cover;
+
+            .lazyload-wrapper {
+                height: 100%;
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                @include scrimGradient(rgba(255, 255, 255, 1), "to top");
+
+                @media (prefers-color-scheme: dark) {
+                    @include scrimGradient(#303030, "to top");
+                }
+            }
+        }
+
+        .filter {
+            --blur: 0px;
+            @include scrimGradient(#fff, "to top");
+
+            @media (prefers-color-scheme: dark) {
+                @include scrimGradient(#303030, "to top");
+                backdrop-filter: blur(var(--blur)) brightness(0.5);
+                -webkit-backdrop-filter: blur(var(--blur)) brightness(0.5);
+            }
+
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+        }
+    }
+}

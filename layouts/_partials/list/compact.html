@@ -1,0 +1,33 @@
+<article class="article small" {{ with .Context.File }}id="{{ .UniqueID }}"{{ end }}>
+    <a href="{{ .Context.RelPermalink }}">
+        <header>
+            <div class="meta">
+                <time datetime="{{ .Context.Date.Format `2006-01-02` }}">{{ .Context.Date | time.Format .Context.Site.Params.DateFormat.Published }}</time>
+            </div>
+
+            <h1 class="title">
+                {{ .Context.Title }}
+            </h1>
+
+            {{ with .Context.Params.description }}
+            <h2 class="description">{{ . }}</h2>
+            {{ end }}
+        </header>
+
+        {{ $cover := partial "helper/cover-image" .Context }}
+        {{ if $cover.Exists }}
+            <div class="image">
+                {{ partial "helper/image/lazy" (dict
+                    "Image" $cover
+                    "Alt" (i18n "featured_image_of" .Context.Title)
+                    "Transform" "fill"
+                    "TransformParams" (dict 
+                        "Image" $cover
+                        "Width" 200
+                        "Height" 200
+                    )
+                )}}
+            </div>
+        {{ end }}
+    </a>
+</article>

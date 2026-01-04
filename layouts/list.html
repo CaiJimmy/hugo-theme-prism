@@ -1,0 +1,33 @@
+{{ define "global" }}
+    {{ .Scratch.Set "CSSModules" (slice "list" "search" "archives")}}
+    {{ $image := partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image) }}
+    {{ .Scratch.Set "hasBlurryHero" (and $image (default .Site.Params.Default.Hero.Blurry .Params.Hero.Blurry)) }}
+{{ end }}
+
+{{ define "main" }}
+{{ $SmallTitle := i18n "section" }}
+{{ $Title := .Title }}
+{{ with .Site.GetPage "/" .Section }}
+    {{ if not (eq $Title .Title) }}
+        {{ $SmallTitle = .Title }}
+    {{ end }}
+{{ end }}
+
+{{ partial "common/hero" (dict 
+    "Context" . 
+    "Image" (partial "helper/image" (dict "Resources" .Resources "Image" .Params.Image))
+    "Title" .Title 
+    "Description" .Params.Description
+    "SmallTitle" $SmallTitle
+) }}
+
+<div class="container">
+    <section class="article-list" id="archive-list">
+        {{ partial "list/search" . }}
+        {{ partial "list/archives" (dict 
+            "StickyDate" (default true .Params.StickyDate)
+            "Pages" .Pages
+        ) }}
+    </section>
+</div>
+{{ end }}

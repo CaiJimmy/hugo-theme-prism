@@ -1,0 +1,6 @@
+[[main]]
+identifier = "rss"
+url = "/index.xml"
+weight = 20
+name = "RSS"
+params = { icon = "rss", target="_blank", iconOnly = false }

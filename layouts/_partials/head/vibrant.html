@@ -1,0 +1,18 @@
+{{- $vibrant := default .Site.Params.Default.Hero.Vibrant .Params.Hero.Vibrant -}}
+{{- $themeColor := "#fff" -}}
+
+{{ if $vibrant }}
+    {{ $image := .Scratch.Get "image" }}
+    {{ if $image }}
+        {{- $vibrantColor := partial "helper/image/vibrant" $image -}}
+        {{- $themeColor = $vibrantColor -}}
+        {{- $style := resources.Get "scss/helper/vibrant.scss" | css.Sass (dict "transpiler" "dartsass" "vars" (dict "color" ($themeColor | css.Unquoted) "blurry" ((.Scratch.Get "hasBlurryHero") | css.Unquoted))) -}}
+        <style>
+            {{ $style.Content | safeCSS }}
+        </style>
+    {{ end }}
+{{ end }}
+
+<meta name="msapplication-TileColor" content="{{ $themeColor }}">
+<meta name="theme-color" content="{{ $themeColor }}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#303030" media="(prefers-color-scheme: dark)">

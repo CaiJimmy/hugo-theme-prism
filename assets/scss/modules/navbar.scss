@@ -1,0 +1,149 @@
+@use "breakpoints.scss" as *;
+
+:root {
+    --navbar-height: 60px;
+    --navbar-menu-height: 40px;
+
+    @include respond(md) {
+        --navbar-height: 80px;
+    }
+}
+
+.navbar {
+    width: 100%;
+    height: var(--navbar-height);
+
+    @include respond(md) {
+        padding: 15px 0;
+    }
+
+    position: relative;
+    z-index: 2;
+    display: flex;
+
+    &.blurry-hero {
+        position: absolute;
+    }
+
+    &>.container {
+        position: relative;
+    }
+
+    .wrapper {
+        display: inline-flex;
+        flex-grow: 1;
+        gap: 10px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navbar--left {
+        flex-grow: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .navbar--right {
+        display: flex;
+    }
+
+    .site-title {
+        font-size: 18px;
+        font-weight: bold;
+
+        @include respond(md) {
+            font-size: 24px;
+        }
+
+        a {
+            color: var(--text-color-main);
+        }
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.language-dropdown {
+    position: relative;
+    display: inline-flex;
+    margin-left: 10px;
+
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--navbar-menu-height);
+        width: var(--navbar-menu-height);
+        border-radius: 4px;
+        color: var(--navbar-color);
+        transition: all 0.5s ease;
+
+        &:hover {
+            background-color: var(--menu-hover-background);
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 1.33;
+        }
+    }
+
+    .dropdown-content {
+        display: flex;
+        flex-direction: column;
+
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--menu-background);
+        min-width: 140px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 6px;
+        gap: 2px;
+        z-index: 100;
+
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.2s ease-in-out;
+
+        a {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: var(--text-color-main);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background 0.2s;
+            white-space: nowrap;
+
+            &:hover,
+            &.current {
+                background-color: var(--menu-hover-background);
+            }
+
+            &.current {
+                font-weight: bold;
+            }
+        }
+    }
+
+    &.open .dropdown-content {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

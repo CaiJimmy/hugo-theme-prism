@@ -1,0 +1,35 @@
+@use "sass:list";
+@use "sass:color";
+@use "sass:math";
+@use "sass:string";
+
+/// From: https://gist.github.com/matthewbeta/0ef11bd907b435f101e09cc6216ad66b
+@mixin scrimGradient($startColor: $color-black, $direction: "to bottom") {
+    $scrimCoordinates: (
+        0: 1,
+        19: 0.738,
+        34: 0.541,
+        47: 0.382,
+        56.5: 0.278,
+        65: 0.194,
+        73: 0.126,
+        80.2: 0.075,
+        86.1: 0.042,
+        91: 0.021,
+        95.2: 0.008,
+        98.2: 0.002,
+        100: 0,
+    );
+
+$hue: color.channel($startColor, "hue", $space: hsl);
+$saturation: color.channel($startColor, "saturation", $space: hsl);
+$lightness: color.channel($startColor, "lightness", $space: hsl);
+$stops: ();
+
+@each $colorStop, $alphaValue in $scrimCoordinates {
+    $stop: hsla($hue, $saturation, $lightness, $alphaValue) math.percentage(calc($colorStop/100));
+    $stops: list.append($stops, $stop, comma);
+}
+
+background: linear-gradient(string.unquote($direction), $stops);
+}

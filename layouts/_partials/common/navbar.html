@@ -1,0 +1,76 @@
+{{ $currentPage := . }}
+<div class="navbar {{ if .Scratch.Get "hasBlurryHero" }}blurry-hero{{ end }}">
+    <div class="container wrapper {{ if .Scratch.Get "wide" }}wide{{ end }}">
+        {{ if .Site.Params.Logo }}
+        <div class="navbar--left">
+            <a href="{{ .Site.BaseURL | relLangURL }}" class="logo" aria-label="Go to home">
+                {{ $logo := partial "helper/image" (dict "Resources" .Resources "Image" .Site.Params.Logo) }}
+                <svg width="40" height="40" viewBox="0 0 182 182" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    class="w-120px h-120px md:w-150px md:h-150px lg:w-180px lg:h-180px">
+                    <path
+                        d="M65.8329 7.61157C81.0982 -2.46432 100.902 -2.46432 116.167 7.61157V7.61157C121.03 10.8211 126.461 13.0708 132.169 14.2397V14.2397C150.088 17.9091 164.091 31.9124 167.76 49.8313V49.8313C168.929 55.539 171.179 60.9705 174.388 65.8329V65.8329C184.464 81.0982 184.464 100.902 174.388 116.167V116.167C171.179 121.03 168.929 126.461 167.76 132.169V132.169C164.091 150.088 150.088 164.091 132.169 167.76V167.76C126.461 168.929 121.03 171.179 116.167 174.388V174.388C100.902 184.464 81.0982 184.464 65.8329 174.388V174.388C60.9705 171.179 55.539 168.929 49.8313 167.76V167.76C31.9124 164.091 17.9091 150.088 14.2397 132.169V132.169C13.0708 126.461 10.8211 121.03 7.61157 116.167V116.167C-2.46432 100.902 -2.46432 81.0982 7.61157 65.8329V65.8329C10.8211 60.9705 13.0708 55.539 14.2397 49.8313V49.8313C17.9091 31.9124 31.9123 17.9091 49.8313 14.2397V14.2397C55.539 13.0708 60.9705 10.8211 65.8329 7.61157V7.61157Z"
+                        fill="url(#pattern0)"></path>
+                    <defs>
+                        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+                            <use xlink:href="#image0_14_11" transform="scale(0.00138889)"></use>
+                        </pattern>
+                        <image id="image0_14_11" width="720" height="720" xlink:href="{{ $logo.Permalink }}"></image>
+                    </defs>
+                </svg>
+            </a>
+        </div>
+        {{ end }}
+
+        <div class="navbar--right">
+            <nav class="menu navbar-menu">
+                {{ range .Site.Menus.main }}
+                {{ $active := or ($currentPage.HasMenuCurrent "main" .) ($currentPage.IsMenuCurrent "main" .) }}
+                <a href='{{ .URL }}' aria-label="{{ .Name }}"
+                    class='{{ if $active }}current{{ end }} {{ if .Params.IconOnly }}icon-only{{ else }}with-text{{ end }}'
+                    {{ with .Params.target }}target="{{ . }}" {{ end }}>
+                    {{ with .Params.icon }}
+                    {{ partial "helper/icon" . }}
+                    {{ end }}
+                    {{- if and (not .Params.IconOnly) .Name -}}
+                    <span>{{- .Name -}}</span>
+                    {{- end -}}
+                </a>
+                {{ end }}
+            </nav>
+            {{ if hugo.IsMultilingual }}
+                <div class="language-dropdown">
+                    <button class="dropdown-toggle" aria-label="Change Language" onclick="this.parentElement.classList.toggle('open')">
+                        {{ partial "helper/icon" "language" }}
+                    </button>
+                    <div class="dropdown-content">
+                        {{ range .Site.Home.AllTranslations }}
+                            {{ $url := .Permalink }}
+                            {{ $lang := .Language.LanguageName }}
+                            {{ $langCode := .Lang }}
+                            {{ $isCurrent := eq $langCode $currentPage.Lang }}
+
+                            {{ range $currentPage.AllTranslations }}
+                                {{ if eq .Lang $langCode }}
+                                    {{ $url = .Permalink }}
+                                {{ end }}
+                            {{ end }}
+
+                            <a href="{{ $url }}" class="{{ if $isCurrent }}current{{ end }}">
+                                {{ $lang }}
+                            </a>
+                        {{ end }}
+                    </div>
+                </div>
+                <script>
+                    window.addEventListener('click', function(e) {
+                        const dropdown = document.querySelector('.language-dropdown');
+                        if (dropdown && !dropdown.contains(e.target)) {
+                            dropdown.classList.remove('open');
+                        }
+                    });
+                </script>
+            {{ end }}
+        </div>
+    </div>
+</div>

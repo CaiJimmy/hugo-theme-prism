@@ -1,0 +1,11 @@
+{{- $related := .Site.RegularPages.Related . | first 4 -}}
+{{ with $related }}
+    <aside class="related-contents container">
+        <h3>See Also</h3>
+        <div class="article-list article-grid two-column">
+            {{ range . }}
+                {{ partial "list/compact" (dict "Context" .)}}
+            {{ end }}
+        </div>
+    </aside>
+{{ end }}

@@ -1,0 +1,23 @@
+{{ $style := .Site.Data.external.PhotoSwipe.Style }}
+{{ $core := .Site.Data.external.PhotoSwipe.Core }}
+{{ $lightbox := .Site.Data.external.PhotoSwipe.Lightbox }}
+
+<script type="module">
+    const shouldLoad = document.querySelectorAll('.article-content figure').length > 0;
+    if (shouldLoad) {
+        const PhotoSwipeLightbox = (await import("{{ $lightbox | safeJS }}")).default;
+        const styleHref = "{{ $style | safeJS }}";
+
+        const styleTag = document.createElement('link');
+        styleTag.rel = 'stylesheet';
+        styleTag.href = styleHref;
+        document.head.appendChild(styleTag);
+
+        const lightbox = new PhotoSwipeLightbox({
+            gallerySelector: '.article-content',
+            childSelector: 'figure a.image-link',
+            pswpModule: () => import("{{ $core | safeJS }}")
+        });
+        lightbox.init();
+    }
+</script>

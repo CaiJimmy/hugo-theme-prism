@@ -1,0 +1,16 @@
+siteNamePostfix = "/"
+mainSections = ["post"]
+rssFullContent = true
+Logo = "https://avatars.githubusercontent.com/u/5889006?s=100"
+
+[Default]
+[Default.Hero]
+Blurry = true
+Vibrant = true
+
+[footer]
+since = 2026
+
+[opengraph.twitter]
+site = "0xJimmy"
+card = "summary_large_image"

@@ -1,0 +1,83 @@
+@use "../breakpoints.scss" as *;
+
+.archives {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.archives-group {
+    display: grid;
+    align-items: flex-start;
+    gap: 10px;
+
+    &.sticky-date {
+        gap: 40px;
+        scroll-margin-top: 40px;
+
+        @include respond(sm) {
+            grid-template-columns: auto 1fr;
+        }
+    }
+
+    .archives-date {
+        margin: 0;
+        font-size: 14px;
+        margin-bottom: 20px;
+
+        .sticky-date>& {
+            @include respond(sm) {
+                position: sticky;
+                top: 40px;
+            }
+        }
+
+        a {
+            color: var(--text-color-secondary);
+        }
+    }
+
+    .article-list article.small a {
+        flex-direction: row-reverse;
+    }
+}
+
+.archives-tags-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    a {
+        display: inline-flex;
+        gap: 10px;
+        color: var(--text-color-main);
+        border: 2px solid var(--border-color);
+        border-radius: 4px;
+        padding: 5px 15px;
+        font-size: 14px;
+        justify-content: center;
+        align-items: center;
+
+        .count {
+            font-weight: bold;
+            color: var(--text-color-secondary);
+        }
+
+        &.selected {
+            background-color: var(--alt-background);
+            border-color: var(--border-color-hover);
+        }
+
+        &.grow {
+            flex-grow: 1;
+        }
+    }
+}
+
+.archives-page {
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        gap: 100px;
+    }
+}
