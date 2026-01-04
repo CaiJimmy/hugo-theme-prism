@@ -4,6 +4,14 @@
 
 Prism is a modern and vibrant Hugo theme designed for personal blogs and portfolios. It features a stunning design with a focus on visual aesthetics and user experience.
 
+## Quick Start
+
+Use this starter template to try the theme right in GitHub Codespaces (no need to install Hugo locally).
+
+<a href="https://github.com/CaiJimmy/hugo-theme-prism-starter">
+  <img src="https://img.shields.io/badge/use%20this-template-blue?logo=github">
+</a>
+
 ## Features
 
 - **Dark Mode Support**: Automatically adapts to system preferences for a comfortable reading experience in any lighting.
