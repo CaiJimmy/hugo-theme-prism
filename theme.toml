@@ -1,0 +1,23 @@
+name = "Prism"
+license = "GPL 3.0"
+licenselink = "https://github.com/CaiJimmy/hugo-theme-prism/blob/master/LICENSE"
+description = "Minimal in form, vibrant in heart"
+homepage = "https://github.com/CaiJimmy/hugo-theme-prism"
+demosite = "https://prism.cai.im"
+
+tags = ["blog", "responsive", "clean", "light", "dark", "personal", "vibrant"]
+
+features = [
+    "disqus",
+    "photoswipe",
+    "opengraph",
+    "darkmode",
+    "table of contents",
+    "search",
+]
+
+min_version = "0.154.0"
+
+[author]
+name = "Jimmy Cai"
+homepage = "https://cai.im"
