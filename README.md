@@ -44,6 +44,14 @@ Prism features two different cover image layouts, which can be toggled by settin
 | --- | --- |
 | ![Blurry = True](https://github.com/user-attachments/assets/18096775-2619-4bd5-af2b-39965489bc41) | ![Blurry = False](https://github.com/user-attachments/assets/e27ba5c4-5e35-45ad-9881-0cae59e97028) |
 
+## Vibrant
+
+Prism can extract the color from the cover image and apply it to different elements of the theme. This is done by setting `hero.vibrant` to `true` or `false` in the page front matter.
+
+| `hero.vibrant = true` | `hero.vibrant = false` |
+| --- | --- |
+| ![Vibrant Enabled](https://github.com/user-attachments/assets/b01d644f-4aa9-4456-ace8-af62192cf58d) | ![Vibrant Disabled](https://github.com/user-attachments/assets/19127d26-bf68-407f-b0d1-ea72fa47a855) |
+
 ## Installation
 
 ### As a Hugo Module (Recommended)
