@@ -21,6 +21,29 @@ Use this starter template to try the theme right in GitHub Codespaces (no need t
 - **Table of Contents**: An elegant, collapsible table of contents for long-form content.
 - **Archive Layout**: Dedicated layout for browsing posts by year.
 
+## Home Layout
+
+The home layout can be configured to show the latest post in the hero section, or independently. This is done by modifying the front matter of the `_index.md` file in the `content` directory, setting `featureFirstArticle` to `true` or `false`.
+
+| `featureFirstArticle = true` | `featureFirstArticle = false` |
+| --- | --- |
+| ![Feature First Article](https://github.com/user-attachments/assets/22bac54b-a206-4cac-849a-7e8923a5e68a) | ![No Feature First Article](https://github.com/user-attachments/assets/d4cb7085-658d-4116-a14d-6759a1b6c7a8) |
+
+Also, the home layout can be configured to show a single page, like an about page, by setting `singlePage = true` in the front matter of the `_index.md` file.
+
+![Single Page](https://github.com/user-attachments/assets/6929db02-f3dc-47ee-bbdb-11adc3fcadef)
+
+## Cover Image
+
+Prism features two different cover image layouts, which can be toggled by setting `hero.blurry` to `true` or `false` in the page front matter.
+
+- `hero.blurry = true`: Cover image will blend with navbar and body background.
+- `hero.blurry = false`: Cover image will be displayed as a normal picture.
+
+| `hero.blurry = true` | `hero.blurry = false` |
+| --- | --- |
+| ![Blurry = True](https://github.com/user-attachments/assets/18096775-2619-4bd5-af2b-39965489bc41) | ![Blurry = False](https://github.com/user-attachments/assets/e27ba5c4-5e35-45ad-9881-0cae59e97028) |
+
 ## Installation
 
 ### As a Hugo Module (Recommended)
