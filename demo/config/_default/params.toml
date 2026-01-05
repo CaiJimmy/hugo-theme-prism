@@ -16,6 +16,7 @@ site = "0xJimmy"
 card = "summary_large_image"
 
 [comments]
+enabled = true  # This will be the default value. Can be overriden on a per-page basis by `comments` field in front matter
 provider = "disqus"
 # In case of Disqus, you need to set the shortname in config.toml, with [services.disqus.shortname]
 # See https://gohugo.io/services/disqus/

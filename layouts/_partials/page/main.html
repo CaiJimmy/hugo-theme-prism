@@ -21,7 +21,7 @@
 
     {{ partial "page/related" . }}
 
-    {{ if not (eq .Params.comments false) }}
+    {{ if default .Site.Params.Comments.Enabled .Params.Comments }}
         {{ partial "page/comments" . }}
     {{ end }}
 </div>
