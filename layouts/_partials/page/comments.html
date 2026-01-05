@@ -1,0 +1,9 @@
+{{ $provider := .Site.Params.comments.provider }}
+
+{{ if templates.Exists (printf "_partials/comments/%s.html" $provider) }}
+    <div class="container comments-container">
+        {{ partial (printf "comments/%s.html" $provider) . }}
+    </div>
+{{ else }}
+    {{ warnf "comments provider %s not found" $provider }}
+{{ end }}

@@ -1,5 +1,5 @@
 {{ define "global" }}
-    {{ $CSSModules := slice "page" }}
+    {{ $CSSModules := slice "page" "comments" }}
 
     {{ if len (.Site.RegularPages.Related .) }}
         {{ $CSSModules = $CSSModules | append "list" }}

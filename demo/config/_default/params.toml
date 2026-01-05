@@ -14,3 +14,8 @@ since = 2026
 [opengraph.twitter]
 site = "0xJimmy"
 card = "summary_large_image"
+
+[comments]
+provider = "disqus"
+# In case of Disqus, you need to set the shortname in config.toml, with [services.disqus.shortname]
+# See https://gohugo.io/services/disqus/

@@ -36,3 +36,7 @@ _merge = "deep"
 
 [markup]
 _merge = 'deep'
+
+[services]
+[services.disqus]
+shortname = 'hugo-theme-prism'
