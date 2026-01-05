@@ -3,7 +3,7 @@
 <html lang="{{ .Site.LanguageCode }}">
     {{ partial "head/include" . }}
     <body class="{{ block `body-class` . }}{{ end }}">
-        <div style="background-color: var(--body-background)">
+        <div style="background-color: var(--body-background); min-height: 100vh">
             {{- partial "common/navbar" . -}}
             {{- block "main" . }}{{- end }}
             {{- partial "footer/include" . -}}
