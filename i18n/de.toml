@@ -1,0 +1,22 @@
+published_on = "Veröffentlicht am {{ . }}"
+last_updated_on = "Zuletzt aktualisiert am {{ . }}"
+table_of_contents = "Inhaltsverzeichnis"
+featured_image_of = "Ausgewähltes Bild von {{ . }}"
+
+continue_reading = "Weiterlesen"
+more_posts = "Mehr..."
+
+section = "Abschnitt"
+
+[search]
+placeholder = "Suche..."
+no_result = "Keine Treffer gefunden für \"{keyword}\""
+num_result = "{count} Treffer result(s) gefunden für \"{keyword}\""
+
+[404]
+title = "404 Nicht gefunden"
+does_not_exist = "Diese Seite existiert nicht."
+
+[footer]
+built_with = "Erstellt mit {{ .Generator }}"
+designed_by = "Theme {{ .Theme }} entworfen von {{ .DesignedBy }}"
