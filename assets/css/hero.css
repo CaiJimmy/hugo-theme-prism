@@ -1,0 +1,220 @@
+/* Scrim stops shared by the blurry hero overlays.
+   Eased alpha curve, from full color at the bottom to transparent at the top. */
+:root {
+    --hero-scrim-light:
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0.738) 19%,
+        rgba(255, 255, 255, 0.541) 34%,
+        rgba(255, 255, 255, 0.382) 47%,
+        rgba(255, 255, 255, 0.278) 56.5%,
+        rgba(255, 255, 255, 0.194) 65%,
+        rgba(255, 255, 255, 0.126) 73%,
+        rgba(255, 255, 255, 0.075) 80.2%,
+        rgba(255, 255, 255, 0.042) 86.1%,
+        rgba(255, 255, 255, 0.021) 91%,
+        rgba(255, 255, 255, 0.008) 95.2%,
+        rgba(255, 255, 255, 0.002) 98.2%,
+        rgba(255, 255, 255, 0) 100%;
+
+    --hero-scrim-dark:
+        rgba(48, 48, 48, 1) 0%,
+        rgba(48, 48, 48, 0.738) 19%,
+        rgba(48, 48, 48, 0.541) 34%,
+        rgba(48, 48, 48, 0.382) 47%,
+        rgba(48, 48, 48, 0.278) 56.5%,
+        rgba(48, 48, 48, 0.194) 65%,
+        rgba(48, 48, 48, 0.126) 73%,
+        rgba(48, 48, 48, 0.075) 80.2%,
+        rgba(48, 48, 48, 0.042) 86.1%,
+        rgba(48, 48, 48, 0.021) 91%,
+        rgba(48, 48, 48, 0.008) 95.2%,
+        rgba(48, 48, 48, 0.002) 98.2%,
+        rgba(48, 48, 48, 0) 100%;
+}
+
+.hero {
+    font-family: var(--serif-font);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: flex-end;
+}
+
+.hero.with-cover.blurry {
+    padding-top: var(--navbar-height);
+    height: 500px;
+}
+
+@media (min-width: 768px) {
+    .hero.with-cover.blurry {
+        height: max(50vh, 600px);
+    }
+}
+
+.hero.with-cover.blurry .hero-body {
+    padding-bottom: 100px;
+}
+
+.hero.with-cover .hero-body h1,
+.hero.with-cover .hero-body h2,
+.hero.with-cover .hero-body span,
+.hero.with-cover .hero-body a {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    .hero.with-cover .hero-body h1,
+    .hero.with-cover .hero-body h2,
+    .hero.with-cover .hero-body span,
+    .hero.with-cover .hero-body a {
+        color: rgb(200 200 200 / 40%);
+    }
+}
+
+.hero .hero-cover img {
+    width: 100%;
+    max-height: max(60vh, 600px);
+    object-fit: cover;
+}
+
+.hero .hero-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 40px;
+}
+
+.hero .hero-body:not(.show-cover) {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+@media (min-width: 768px) {
+    .hero .hero-body:not(.show-cover) {
+        padding-top: 150px;
+        padding-bottom: 150px;
+    }
+}
+
+.hero .hero-body.show-cover {
+    margin-top: 40px;
+}
+
+.hero .hero-body h1,
+.hero .hero-body h2,
+.hero .hero-body span {
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: cover;
+    background-position: center;
+    background-image: var(--hero-cover-background);
+}
+
+.hero .hero-body h1 {
+    font-size: 48px;
+    margin: 0;
+    color: var(--text-color-main);
+}
+
+@media (min-width: 768px) {
+    .hero .hero-body h1 {
+        font-size: 64px;
+    }
+}
+
+.hero .hero-body h1.big {
+    font-size: 48px;
+}
+
+@media (min-width: 768px) {
+    .hero .hero-body h1.big {
+        font-size: 64px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero .hero-body h1.big {
+        font-size: 72px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .hero .hero-body h1.big {
+        font-size: 96px;
+    }
+}
+
+.hero .hero-body h2 {
+    font-weight: normal;
+    color: var(--text-color-secondary);
+    font-size: 24px;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .hero .hero-body h2.big {
+        font-size: 36px;
+    }
+}
+
+.hero .hero-body span,
+.hero .hero-body span a {
+    font-size: 18px;
+    color: var(--text-color-tertiary);
+}
+
+.hero.blurry .hero-cover,
+.hero.blurry .filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero.blurry .hero-cover {
+    background-image: var(--hero-cover-background);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    object-fit: cover;
+}
+
+.hero.blurry .hero-cover .lazyload-wrapper {
+    height: 100%;
+}
+
+.hero.blurry .hero-cover:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, var(--hero-scrim-light));
+}
+
+@media (prefers-color-scheme: dark) {
+    .hero.blurry .hero-cover:after {
+        background: linear-gradient(to top, var(--hero-scrim-dark));
+    }
+}
+
+.hero.blurry .filter {
+    --blur: 0px;
+    background: linear-gradient(to top, var(--hero-scrim-light));
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+}
+
+@media (prefers-color-scheme: dark) {
+    .hero.blurry .filter {
+        background: linear-gradient(to top, var(--hero-scrim-dark));
+        backdrop-filter: blur(var(--blur)) brightness(0.5);
+        -webkit-backdrop-filter: blur(var(--blur)) brightness(0.5);
+    }
+}

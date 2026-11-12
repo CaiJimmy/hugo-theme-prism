@@ -1,0 +1,73 @@
+:root {
+    --menu-background: var(--body-background);
+    --menu-color: #333;
+    --menu-border-radius: 8px;
+    --menu-hover-background: rgb(0 0 0 / 10%);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --menu-hover-background: rgb(255 255 255 / 10%);
+    }
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    gap: 10px;
+}
+
+.menu a {
+    height: var(--navbar-menu-height);
+    font-size: 16px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    color: var(--navbar-color);
+    border-radius: 4px;
+    transition: all 0.5s ease;
+}
+
+.menu a:hover,
+.menu a.current {
+    background-color: var(--menu-hover-background);
+}
+
+.menu a.with-text {
+    padding: 10px;
+}
+
+@media (min-width: 768px) {
+    .menu a.with-text {
+        padding: 10px 20px;
+    }
+}
+
+.menu a.icon-only {
+    aspect-ratio: 1 / 1;
+}
+
+.menu svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--navbar-color);
+    stroke-width: 1.33;
+}
+
+.navbar-menu {
+    flex-wrap: wrap;
+    display: none;
+    margin: 0;
+    display: flex;
+}
+
+.navbar-menu li {
+    font-size: 16px;
+}
+
+@media (min-width: 768px) {
+    .navbar-menu li {
+        font-size: 18px;
+    }
+}

@@ -1,6 +1,5 @@
 {{ define "global" }}
     {{ .Scratch.Set "CSSModules" (slice "list" "page") }}
-    {{ .Scratch.Set "CSSModulesCritical" (slice) }}
 
     {{ $image := "" }}
     {{ $mainPages := where .Site.RegularPages "Type" "in" .Site.Params.mainSections }}

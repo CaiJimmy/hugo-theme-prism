@@ -46,7 +46,7 @@
                     <div class="dropdown-content">
                         {{ range .Site.Home.AllTranslations }}
                             {{ $url := .Permalink }}
-                            {{ $lang := .Language.LanguageName }}
+                            {{ $lang := or .Language.Label .Lang }}
                             {{ $langCode := .Lang }}
                             {{ $isCurrent := eq $langCode $currentPage.Lang }}
 
