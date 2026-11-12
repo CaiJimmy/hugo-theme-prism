@@ -1,3 +1,0 @@
-{{ range $module := .Modules }}
-    @use 'modules/{{ $module }}.scss';
-{{ end }}

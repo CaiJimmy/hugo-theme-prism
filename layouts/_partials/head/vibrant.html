@@ -4,12 +4,72 @@
 {{ if $vibrant }}
     {{ $image := .Scratch.Get "image" }}
     {{ if $image }}
-        {{- $vibrantColor := partial "helper/image/vibrant" $image -}}
-        {{- $themeColor = $vibrantColor -}}
-        {{- $style := resources.Get "scss/helper/vibrant.scss" | css.Sass (dict "transpiler" "dartsass" "vars" (dict "color" ($themeColor | css.Unquoted) "blurry" ((.Scratch.Get "hasBlurryHero") | css.Unquoted))) -}}
-        <style>
-            {{ $style.Content | safeCSS }}
-        </style>
+        {{- $themeColor = partial "helper/image/vibrant" $image -}}
+        {{- $hex := $themeColor | strings.TrimPrefix "#" -}}
+
+        {{ if eq (len $hex) 6 }}
+            {{- $r := int (printf "0x%s" (substr $hex 0 2)) -}}
+            {{- $g := int (printf "0x%s" (substr $hex 2 2)) -}}
+            {{- $b := int (printf "0x%s" (substr $hex 4 2)) -}}
+
+            {{- /* Dark text on light colors, light text on dark colors. */ -}}
+            {{- $max := math.Max (math.Max (float $r) (float $g)) (float $b) -}}
+            {{- $min := math.Min (math.Min (float $r) (float $g)) (float $b) -}}
+            {{- $mainTextColor := cond (gt (div (add $max $min) 510.0) 0.6) "#000" "#fff" -}}
+
+            {{- /* Eased alpha stops used by the hero scrim. */ -}}
+            {{- $scrim := slice
+                (dict "pos" "0%" "alpha" 1)
+                (dict "pos" "19%" "alpha" 0.738)
+                (dict "pos" "34%" "alpha" 0.541)
+                (dict "pos" "47%" "alpha" 0.382)
+                (dict "pos" "56.5%" "alpha" 0.278)
+                (dict "pos" "65%" "alpha" 0.194)
+                (dict "pos" "73%" "alpha" 0.126)
+                (dict "pos" "80.2%" "alpha" 0.075)
+                (dict "pos" "86.1%" "alpha" 0.042)
+                (dict "pos" "91%" "alpha" 0.021)
+                (dict "pos" "95.2%" "alpha" 0.008)
+                (dict "pos" "98.2%" "alpha" 0.002)
+                (dict "pos" "100%" "alpha" 0)
+            -}}
+            {{- $stops := slice -}}
+            {{- range $scrim -}}
+                {{- $stops = $stops | append (printf "rgba(%d, %d, %d, %v) %s" $r $g $b .alpha .pos) -}}
+            {{- end -}}
+
+            <style>
+                @media (prefers-color-scheme: light) {
+                    .hero.blurry .filter:after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(to bottom, {{ delimit $stops ", " | safeCSS }});
+                    }
+
+                    .blurry-hero {
+                        --navbar-color: {{ $mainTextColor }} !important;
+                    }
+                }
+
+                :root {
+                    --link-background-color: {{ $r }}, {{ $g }}, {{ $b }};
+                    --scrollbar-thumb-color: {{ $themeColor }};
+
+                    --accent-color: {{ $mainTextColor }} !important;
+                }
+
+                {{ if .Scratch.Get "hasBlurryHero" }}
+                /* Safari 26 now ignores the theme-color meta tag. */
+                body {
+                    background: {{ $themeColor }};
+                }
+                {{ end }}
+            </style>
+        {{ end }}
     {{ end }}
 {{ end }}
 

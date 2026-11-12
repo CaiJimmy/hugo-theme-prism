@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {{- block `global` . -}}{{- end -}}
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language.Locale }}">
     {{ partial "head/include" . }}
     <body class="{{ block `body-class` . }}{{ end }}">
         <div style="background-color: var(--body-background); min-height: 100vh">

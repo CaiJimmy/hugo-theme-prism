@@ -1,11 +1,11 @@
 :root {
-    /// Font family
+    /* Font family */
     --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Droid Sans", "Helvetica Neue";
     --code-font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 
     --base-font-family: "Inter", var(--sys-font-family), sans-serif;
 
-    /// Color scheme
+    /* Color scheme */
     --accent-color: #8ecae6;
     --accent-color-darker: #219ebc;
     --accent-color-text: #fff;
@@ -43,9 +43,9 @@
     --navbar-color: var(--text-color-main);
 }
 
-/// Dark mode scheme
-:root {
-    @media (prefers-color-scheme: dark) {
+/* Dark mode scheme */
+@media (prefers-color-scheme: dark) {
+    :root {
         --body-background: #303030;
         --text-color-main: rgba(255, 255, 255, 0.9);
         --text-color-secondary: rgba(255, 255, 255, 0.7);

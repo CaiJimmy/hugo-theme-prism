@@ -2,7 +2,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link 
-    href="{{ .Site.Data.external.InterFont.Style }}" 
+    href="{{ hugo.Data.external.InterFont.Style }}" 
     rel="preload" 
     as="style" 
     onload="this.rel='stylesheet'"
@@ -10,37 +10,44 @@
 <noscript>
     <link 
         rel="stylesheet" 
-        href="{{ .Site.Data.external.InterFont.Style }}"
+        href="{{ hugo.Data.external.InterFont.Style }}"
     >
 </noscript>
 
-{{ $core := resources.Get "scss/core.scss" }}
-{{ $moduleLoader := resources.Get "scss/loader.scss" }}
+{{ $coreFiles := slice
+    "css/variables.css"
+    "css/base.css"
+    "css/navbar.css"
+    "css/menu.css"
+    "css/hero.css"
+    "css/footer.css"
+    "css/custom.css"
+}}
 
-{{ $options := (dict "transpiler" "dartsass")  }}
-{{ if hugo.IsProduction }}
-    {{ $options = merge $options (dict "outputStyle" "compressed" "enableSourceMap" false)  }}
+{{ $core := slice }}
+{{ range $coreFiles }}
+    {{ with resources.Get . }}
+        {{ $core = $core | append . }}
+    {{ else }}
+        {{ warnf "core stylesheet not found: %s" . }}
+    {{ end }}
 {{ end }}
 
-{{ $coreStyle := $core | css.Sass $options }}
+{{ $coreStyle := $core | resources.Concat "css/core.css" }}
+{{ if hugo.IsProduction }}
+    {{ $coreStyle = $coreStyle | minify }}
+{{ end }}
+
 <style>
     {{ $coreStyle.Content | safeCSS }}
 </style>
 
-{{ if .Scratch.Get "CSSModulesCritical" }}
-    {{ $hash := md5 (delimit (.Scratch.Get "CSSModulesCritical") ",")}}
-    {{ $style := $moduleLoader | resources.ExecuteAsTemplate (printf "css/critical.%s.scss" $hash) (dict "Context" . "Modules" (.Scratch.Get "CSSModulesCritical")) | css.Sass $options }}
-        
-    <style>
-        {{ $style.Content | safeCSS }}
-    </style>
-{{ end }}
-
-
 {{ range (default slice (.Scratch.Get "CSSModules")) }}
-    {{ $hash := md5 . }}
-    {{ $module := resources.Get (printf "scss/modules/%s.scss" .) }}
-    {{ $opt := merge $options (dict "targetPath" (printf "css/%s.css" $hash)) }}
-    {{ $style := $module | css.Sass $opt }}
-    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ $path := printf "css/modules/%s.css" . }}
+    {{ with resources.Get $path }}
+        {{ $style := . | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    {{ else }}
+        {{ warnf "CSS module not found: %s" $path }}
+    {{ end }}
 {{ end }}
